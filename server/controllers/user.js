@@ -1,13 +1,17 @@
 import User from '../models/user.js';
 
 export const userLogin = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  const appUser = await User.findOne({ email: email, password: password });
+  const userEmail = req.body.email;
+  const userPassword = req.body.password;
+  const appUser = await User.findOne({
+    email: userEmail,
+    password: userPassword,
+  });
   if (!appUser) {
     return res.status(404).json({ message: 'Invalid credentials.' });
   }
-  return res.status(200).json(appUser);
+  const { _id, email, group } = appUser;
+  return res.status(200).json({ id: _id, email, group });
 };
 
 export const userSignup = async (req, res) => {

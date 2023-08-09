@@ -1,23 +1,46 @@
-import { useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import Button from './common/Button';
 import { validate } from 'email-validator';
 import { toast } from 'react-toastify';
 import { userLogin } from '../api/requests';
 import { AxiosResponse } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { getAppUser } from '../utils';
+import Spinner from './common/Spinner';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (getAppUser()) {
+      navigate('/dashboard');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const onUserLogin = () => {
     if (email?.trim() && validate(email) && password?.trim()) {
-      userLogin(email, password).then((response: AxiosResponse) => {
-        localStorage.setItem('appUser', JSON.stringify(response.data));
-        navigate('/dashboard');
-      });
+      setLoading(true);
+      userLogin(email, password)
+        .then((response: AxiosResponse) => {
+          localStorage.setItem('appUser', JSON.stringify(response.data));
+          setLoading(false);
+          navigate(localStorage.getItem('redirect_route') || '/dashboard');
+        })
+        .catch(({ response }) => {
+          setLoading(false);
+          toast.error(response?.data?.message);
+        });
     } else {
       toast.error('Please enter all required fields.');
+    }
+  };
+
+  const onPressEnter = (e: KeyboardEvent) => {
+    if (e?.key === 'Enter') {
+      onUserLogin();
     }
   };
   return (
@@ -37,6 +60,7 @@ const Login = () => {
             required
             value={email}
             onChange={(e) => setEmail(e?.target?.value)}
+            onKeyDown={onPressEnter}
           />
         </div>
         <div className='mt-4'>
@@ -50,6 +74,7 @@ const Login = () => {
             required
             value={password}
             onChange={(e) => setPassword(e?.target?.value)}
+            onKeyDown={onPressEnter}
           />
         </div>
         <p className='my-2 text-right'>
@@ -58,7 +83,15 @@ const Login = () => {
             Create account
           </Link>
         </p>
-        <Button label='Login' clickHandler={onUserLogin} styles='m-auto mt-4' />
+        {loading ? (
+          <Spinner size='2xl' styles='mt-4' />
+        ) : (
+          <Button
+            label='Login'
+            clickHandler={onUserLogin}
+            styles='m-auto mt-4'
+          />
+        )}
       </div>
     </section>
   );

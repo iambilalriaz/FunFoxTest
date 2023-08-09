@@ -4,20 +4,26 @@ import { createDBConnection } from './db/index.js';
 import 'dotenv/config';
 import cors from 'cors';
 import authRoutes from './routes/user.js';
-
+import taskRoutes from './routes/task.js';
+import { Server } from 'socket.io';
+import http from 'http';
 const app = express();
+const server = http.createServer(app);
+export const io = new Server(server);
+
 app.use(morgan('dev'));
 app.use(json());
 
-app.use(
-  cors({
-    origin: '*',
-  })
-);
+app.use(cors());
 
 app.use('/auth', authRoutes);
+app.use('/tasks', taskRoutes);
 
-app.listen(4000, () => {
+io.on('connection', () => {
+  console.log('Socket connection established.');
+});
+
+server.listen(4000, () => {
   console.log('Server listening on 4000');
   createDBConnection();
 });

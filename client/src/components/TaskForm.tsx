@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { KeyboardEvent, useState } from 'react';
 import Button from './common/Button';
 import { ITask } from './TasksList';
+import { getAppUser } from '../utils';
 
 const TaskForm = ({
   addNewTask,
@@ -11,6 +12,20 @@ const TaskForm = ({
 }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  const onAddTask = () => {
+    addNewTask({
+      title,
+      description,
+      completed: false,
+      created_by: getAppUser()?.email,
+    });
+  };
+  const onPressEnter = (e: KeyboardEvent) => {
+    if (e?.key === 'Enter') {
+      onAddTask();
+    }
+  };
   return (
     <div className='h-screen grid place-items-center'>
       <div className='shadow-2xl rounded-lg p-4 min-w-[50%] m-4 text-secondary'>
@@ -24,6 +39,7 @@ const TaskForm = ({
           value={title}
           onChange={(e) => setTitle(e?.target?.value)}
           className='outline-none border border-secondary rounded p-1 block w-full mb-4'
+          onKeyDown={onPressEnter}
         />
         <label htmlFor='description' className='font-semibold'>
           Description
@@ -41,18 +57,7 @@ const TaskForm = ({
             clickHandler={toggleAddingNewTask}
             variant='secondary'
           />
-          <Button
-            label='Submit'
-            clickHandler={() =>
-              addNewTask({
-                id: crypto.randomUUID(),
-                title,
-                description,
-                completed: false,
-              })
-            }
-            styles='ml-4'
-          />
+          <Button label='Submit' clickHandler={onAddTask} styles='ml-4' />
         </div>
       </div>
     </div>

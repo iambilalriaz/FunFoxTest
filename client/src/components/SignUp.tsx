@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import { userGroups } from '../assets/groups';
 import Button from './common/Button';
 import { validate } from 'email-validator';
@@ -6,12 +6,19 @@ import { toast } from 'react-toastify';
 import { userSignUp } from '../api/requests';
 import { AxiosResponse } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { getAppUser } from '../utils';
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [group, setGroup] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (getAppUser()) {
+      navigate('/dashboard');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const onUserSignUp = () => {
     if (email?.trim() && validate(email) && password?.trim() && group) {
       userSignUp(email, password, group).then((response: AxiosResponse) => {
@@ -20,6 +27,12 @@ const SignUp = () => {
       });
     } else {
       toast.error('Please enter all required fields.');
+    }
+  };
+
+  const onPressEnter = (e: KeyboardEvent) => {
+    if (e?.key === 'Enter') {
+      onUserSignUp();
     }
   };
   return (
@@ -39,6 +52,7 @@ const SignUp = () => {
             required
             value={email}
             onChange={(e) => setEmail(e?.target?.value)}
+            onKeyDown={onPressEnter}
           />
         </div>
         <div className='mt-4'>
@@ -52,6 +66,7 @@ const SignUp = () => {
             required
             value={password}
             onChange={(e) => setPassword(e?.target?.value)}
+            onKeyDown={onPressEnter}
           />
         </div>
         <div className='mt-4'>
@@ -64,6 +79,7 @@ const SignUp = () => {
             required
             value={group}
             onChange={(e) => setGroup(e?.target?.value)}
+            onKeyDown={onPressEnter}
           >
             <option disabled value=''>
               -- Select user group --
