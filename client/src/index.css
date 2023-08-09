@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.toast {
+  animation-delay: 1s;
+  animation-duration: 4s;
+  animation-fill-mode: forwards;
+}
+@keyframes toast-anim {
+  0% {
+    top: -5rem;
+  }
+  25% {
+    top: 1rem;
+  }
+  50% {
+    top: 1rem;
+  }
+  75% {
+    top: 1rem;
+  }
+  100% {
+    top: -5rem;
+  }
+}
