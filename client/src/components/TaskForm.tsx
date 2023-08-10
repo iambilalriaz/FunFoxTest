@@ -2,7 +2,7 @@ import { KeyboardEvent, useState } from 'react';
 import Button from './common/Button';
 import { ITask } from './TasksList';
 import { getAppUser } from '../utils';
-
+import { motion } from 'framer-motion';
 const TaskForm = ({
   addNewTask,
   toggleAddingNewTask,
@@ -27,7 +27,21 @@ const TaskForm = ({
     }
   };
   return (
-    <div className='h-screen grid place-items-center'>
+    <motion.div
+      initial={{
+        opacity: 0,
+        x: 1000,
+      }}
+      animate={{
+        opacity: 1,
+        x: 0,
+      }}
+      transition={{
+        delay: 0.2,
+        duration: 0.5,
+      }}
+      className='h-screen grid place-items-center'
+    >
       <div className='shadow-2xl rounded-lg p-4 min-w-[50%] m-4 text-secondary'>
         <label htmlFor='title' className='font-semibold'>
           Title
@@ -60,7 +74,7 @@ const TaskForm = ({
           <Button label='Submit' clickHandler={onAddTask} styles='ml-4' />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

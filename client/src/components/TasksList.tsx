@@ -5,6 +5,7 @@ import TaskCard from './TaskCard';
 import Header from './Header';
 import EmptyState from './EmptyState';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 import {
   addTask,
@@ -15,6 +16,7 @@ import {
 import { getAppUser, socket } from '../utils';
 import Spinner from './common/Spinner';
 import AddTaskButton from './AddTaskButton';
+import { opacityVariants, slideInVariants } from '../assets/variants';
 
 export interface ITask {
   id?: string;
@@ -145,10 +147,18 @@ const TasksList = () => {
     };
   }, []);
   return (
-    <div>
-      {!addingNewTask && (
+    <motion.div
+      variants={opacityVariants}
+      initial='initial'
+      animate='animate'
+      transition={{
+        delay: 0.2,
+        duration: 0.5,
+      }}
+    >
+      {!addingNewTask ? (
         <AddTaskButton toggleAddingNewTask={toggleAddingNewTask} />
-      )}
+      ) : null}
       <Header />
       {addingNewTask ? (
         <TaskForm
@@ -165,20 +175,23 @@ const TasksList = () => {
               : {}
           }
         >
+          <motion.p
+            variants={slideInVariants}
+            className='fixed w-full top-12 pt-8 pb-4 text-center text-xs sm:text-base bg-light text-light flex justify-center items-center'
+          >
+            <p className='bg-secondary w-fit rounded-full px-2 sm:px-4 py-1'>
+              {getAppUser()?.email}
+            </p>
+            <p className='bg-primary w-fit rounded-full px-2 sm:px-4 py-1 ml-1 sm:ml-3'>
+              {getAppUser()?.group}
+            </p>
+          </motion.p>
           {loading ? (
             <div className='h-screen grid place-items-center'>
               <Spinner size='4xl' />
             </div>
           ) : (
             <>
-              <p className='fixed w-full top-12 pt-8 pb-4 text-center text-xs sm:text-base bg-light text-light flex justify-center items-center'>
-                <p className='bg-secondary w-fit rounded-full px-2 sm:px-4 py-1'>
-                  {getAppUser()?.email}
-                </p>
-                <p className='bg-primary w-fit rounded-full px-2 sm:px-4 py-1 ml-1 sm:ml-3'>
-                  {getAppUser()?.group}
-                </p>
-              </p>
               <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId='droppable'>
                   {(provided) => (
@@ -188,13 +201,21 @@ const TasksList = () => {
                       className='pb-4'
                     >
                       {tasksList.map((task, index) => (
-                        <TaskCard
+                        <motion.div
                           key={task?.id}
-                          task={task}
-                          index={index}
-                          deleteTask={deleteTask}
-                          changeCompletionStatus={changeCompletionStatus}
-                        />
+                          variants={opacityVariants}
+                          transition={{
+                            delay: index / 3,
+                            duration: 0.5,
+                          }}
+                        >
+                          <TaskCard
+                            task={task}
+                            index={index}
+                            deleteTask={deleteTask}
+                            changeCompletionStatus={changeCompletionStatus}
+                          />
+                        </motion.div>
                       ))}
                       {provided.placeholder}
                     </div>
@@ -206,7 +227,7 @@ const TasksList = () => {
           )}
         </section>
       )}
-    </div>
+    </motion.div>
   );
 };
 

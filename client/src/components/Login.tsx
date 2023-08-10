@@ -7,6 +7,9 @@ import { AxiosResponse } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAppUser } from '../utils';
 import Spinner from './common/Spinner';
+
+import { motion } from 'framer-motion';
+import { slideInVariants } from '../assets/variants';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,8 +47,17 @@ const Login = () => {
     }
   };
   return (
-    <section className='h-screen bg-slate-300 grid place-items-center text-xs md:text-sm'>
-      <div className='bg-light shadow-2xl rounded-lg p-4 min-w-[50%] m-4 text-secondary'>
+    <motion.section className='h-screen bg-slate-300 grid place-items-center text-xs md:text-sm'>
+      <motion.div
+        variants={slideInVariants}
+        initial='initial'
+        animate='animate'
+        transition={{
+          delay: 0.2,
+          duration: 0.5,
+        }}
+        className='bg-light shadow-2xl rounded-lg p-4 min-w-[50%] m-4 text-secondary'
+      >
         <header className='text-2xl font-medium text-secondary underline'>
           Login
         </header>
@@ -92,8 +104,8 @@ const Login = () => {
             styles='m-auto mt-4'
           />
         )}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 

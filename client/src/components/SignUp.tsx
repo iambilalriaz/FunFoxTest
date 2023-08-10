@@ -7,6 +7,10 @@ import { userSignUp } from '../api/requests';
 import { AxiosResponse } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAppUser } from '../utils';
+
+import { motion } from 'framer-motion';
+import { slideInVariants } from '../assets/variants';
+
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,7 +41,16 @@ const SignUp = () => {
   };
   return (
     <section className='h-screen bg-slate-300 grid place-items-center text-xs md:text-sm'>
-      <div className='bg-light shadow-2xl rounded-lg p-4 min-w-[50%] m-4 text-secondary'>
+      <motion.div
+        variants={slideInVariants}
+        initial='initial'
+        animate='animate'
+        transition={{
+          delay: 0.2,
+          duration: 0.5,
+        }}
+        className='bg-light shadow-2xl rounded-lg p-4 min-w-[50%] m-4 text-secondary'
+      >
         <header className='text-2xl font-medium text-secondary underline'>
           Sign Up
         </header>
@@ -102,7 +115,7 @@ const SignUp = () => {
           clickHandler={onUserSignUp}
           styles='m-auto mt-4'
         />
-      </div>
+      </motion.div>
     </section>
   );
 };
