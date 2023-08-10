@@ -7,7 +7,6 @@ export const createDBConnection = () =>
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        authSource: 'admin',
       }
     )
     .then(() => console.log('DB connection established.'))
