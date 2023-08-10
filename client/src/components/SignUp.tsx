@@ -55,7 +55,10 @@ const SignUp = () => {
           Sign Up
         </header>
         <div className='mt-4'>
-          <label htmlFor='email' className='font-medium'>
+          <label
+            htmlFor='email'
+            className='font-medium after:content-["*"] after:text-danger after:ml-0.5'
+          >
             Email
           </label>
           <input
@@ -69,7 +72,10 @@ const SignUp = () => {
           />
         </div>
         <div className='mt-4'>
-          <label htmlFor='password' className='font-medium'>
+          <label
+            htmlFor='password'
+            className='font-medium after:content-["*"] after:text-danger after:ml-0.5'
+          >
             Password
           </label>
           <input
@@ -83,7 +89,10 @@ const SignUp = () => {
           />
         </div>
         <div className='mt-4'>
-          <label htmlFor='user-group' className='font-medium'>
+          <label
+            htmlFor='user-group'
+            className='font-medium after:content-["*"] after:text-danger after:ml-0.5'
+          >
             Group
           </label>
           <select

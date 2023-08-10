@@ -43,7 +43,10 @@ const TaskForm = ({
       className='h-screen grid place-items-center'
     >
       <div className='shadow-2xl rounded-lg p-4 min-w-[50%] m-4 text-secondary'>
-        <label htmlFor='title' className='font-semibold'>
+        <label
+          htmlFor='title'
+          className='font-semibold after:content-["*"] after:text-danger after:ml-0.5'
+        >
           Title
         </label>
         <input
@@ -55,7 +58,10 @@ const TaskForm = ({
           className='outline-none border border-secondary rounded p-1 block w-full mb-4'
           onKeyDown={onPressEnter}
         />
-        <label htmlFor='description' className='font-semibold'>
+        <label
+          htmlFor='description'
+          className='font-semibold after:content-["*"] after:text-danger after:ml-0.5'
+        >
           Description
         </label>
         <textarea
