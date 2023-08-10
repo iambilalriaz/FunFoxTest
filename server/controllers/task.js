@@ -51,7 +51,6 @@ export const addTask = async (req, res) => {
       completed: task?.completed,
       created_by: task.created_by,
     }));
-    console.log({ tasksResponse });
     io.sockets.emit('UPDATE_TASKS', {
       tasks: tasksResponse,
       group: req.userGroup,
