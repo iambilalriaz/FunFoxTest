@@ -8,7 +8,8 @@ export const getGroupTasks = async (req, res) => {
 
   try {
     const groupTasks = await Task.find({ user_group: req.userGroup });
-    console.log(groupTasks);
+    groupTasks.sort((t1, t2) => t2.createdAt - t1.createdAt);
+
     const tasksResponse = groupTasks?.map((task) => ({
       id: task?._id,
       title: task?.title,
@@ -42,6 +43,7 @@ export const addTask = async (req, res) => {
     });
     await newTask.save();
     const tasks = await Task.find({ user_group: req.userGroup });
+    tasks.sort((t1, t2) => t2.createdAt - t1.createdAt);
     const tasksResponse = tasks?.map((task) => ({
       id: task?._id,
       title: task?.title,
@@ -49,6 +51,7 @@ export const addTask = async (req, res) => {
       completed: task?.completed,
       created_by: task.created_by,
     }));
+    console.log({ tasksResponse });
     io.sockets.emit('UPDATE_TASKS', {
       tasks: tasksResponse,
       group: req.userGroup,
