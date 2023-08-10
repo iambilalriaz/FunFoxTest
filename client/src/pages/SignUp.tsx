@@ -26,10 +26,14 @@ const SignUp = () => {
   }, []);
   const onUserSignUp = () => {
     if (email?.trim() && validate(email) && password?.trim() && group) {
-      userSignUp(email, password, group).then((response: AxiosResponse) => {
-        toast.success(response.data.message);
-        navigate('/login');
-      });
+      userSignUp(email, password, group)
+        .then((response: AxiosResponse) => {
+          toast.success(response.data.message);
+          navigate('/login');
+        })
+        .catch((error) => {
+          toast.error(error.response?.data.message);
+        });
     } else {
       toast.error('Please enter all required fields.');
     }
