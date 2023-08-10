@@ -14,6 +14,7 @@ import {
 } from '../api/requests';
 import { getAppUser, socket } from '../utils';
 import Spinner from './common/Spinner';
+import AddTaskButton from './AddTaskButton';
 
 export interface ITask {
   id?: string;
@@ -145,8 +146,10 @@ const TasksList = () => {
   }, []);
   return (
     <div>
-      <Header toggleAddingNewTask={toggleAddingNewTask} />
-
+      {!addingNewTask && (
+        <AddTaskButton toggleAddingNewTask={toggleAddingNewTask} />
+      )}
+      <Header />
       {addingNewTask ? (
         <TaskForm
           addNewTask={addNewTask}
@@ -157,7 +160,7 @@ const TasksList = () => {
           style={
             !loading
               ? {
-                  marginTop: tasksList?.length ? `${headerHeight}px` : 0,
+                  marginTop: `${headerHeight + 60}px`,
                 }
               : {}
           }
@@ -168,10 +171,22 @@ const TasksList = () => {
             </div>
           ) : (
             <>
+              <p className='fixed w-full top-12 pt-8 pb-4 text-center text-xs sm:text-base bg-light text-light flex justify-center items-center'>
+                <p className='bg-secondary w-fit rounded-full px-2 sm:px-4 py-1'>
+                  {getAppUser()?.email}
+                </p>
+                <p className='bg-primary w-fit rounded-full px-2 sm:px-4 py-1 ml-1 sm:ml-3'>
+                  {getAppUser()?.group}
+                </p>
+              </p>
               <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId='droppable'>
                   {(provided) => (
-                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                    <div
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      className='pb-4'
+                    >
                       {tasksList.map((task, index) => (
                         <TaskCard
                           key={task?.id}
@@ -186,10 +201,7 @@ const TasksList = () => {
                   )}
                 </Droppable>
               </DragDropContext>
-              <EmptyState
-                tasksLength={tasksList?.length}
-                toggleAddingNewTask={toggleAddingNewTask}
-              />
+              <EmptyState tasksLength={tasksList?.length} />
             </>
           )}
         </section>
