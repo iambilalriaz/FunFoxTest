@@ -1,12 +1,5 @@
-import { IconType } from 'react-icons';
+import { IButton } from '../types';
 
-interface IButton {
-  label: string;
-  variant?: 'primary' | 'secondary' | 'danger' | 'success';
-  clickHandler: () => void;
-  styles?: string;
-  Icon?: IconType;
-}
 const Button = ({
   label,
   variant = 'primary',

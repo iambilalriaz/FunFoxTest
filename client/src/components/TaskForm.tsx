@@ -1,19 +1,41 @@
 import { KeyboardEvent, useState } from 'react';
 import Button from './common/Button';
-import { ITask } from './TasksList';
 import { getAppUser } from '../utils';
 import { motion } from 'framer-motion';
 import Input from './common/Input';
 import { slideInVariants } from '../assets/variants';
+import { addTask } from '../api/requests';
+import { toast } from 'react-toastify';
+import Spinner from './common/Spinner';
+import { ITask } from './types';
 const TaskForm = ({
-  addNewTask,
+  setTasksList,
   toggleAddingNewTask,
 }: {
-  addNewTask: (task: ITask) => void;
+  setTasksList: (tasksList: ITask[]) => void;
   toggleAddingNewTask: () => void;
 }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const addNewTask = (task: ITask) => {
+    if (task?.title?.trim() && task?.description?.trim()) {
+      setLoading(true);
+      addTask(task?.title, task?.description)
+        .then(({ data }) => {
+          setTasksList(data?.tasks);
+          toggleAddingNewTask();
+          setLoading(false);
+        })
+        .catch(({ response }) => {
+          toast.error(response?.data?.message);
+          setLoading(false);
+        });
+    } else {
+      toast.error('Please fill all the required fields.');
+    }
+  };
 
   const onAddTask = () => {
     addNewTask({
@@ -62,12 +84,18 @@ const TaskForm = ({
         />
 
         <div className='flex justify-center items-center mt-4'>
-          <Button
-            label='Cancel'
-            clickHandler={toggleAddingNewTask}
-            variant='secondary'
-          />
-          <Button label='Submit' clickHandler={onAddTask} styles='ml-4' />
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <Button
+                label='Cancel'
+                clickHandler={toggleAddingNewTask}
+                variant='secondary'
+              />
+              <Button label='Submit' clickHandler={onAddTask} styles='ml-4' />
+            </>
+          )}
         </div>
       </div>
     </motion.div>

@@ -1,16 +1,16 @@
 import { KeyboardEvent, useEffect, useState } from 'react';
-import Button from './common/Button';
 import { validate } from 'email-validator';
 import { toast } from 'react-toastify';
 import { userLogin } from '../api/requests';
 import { AxiosResponse } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAppUser } from '../utils';
-import Spinner from './common/Spinner';
 
 import { motion } from 'framer-motion';
 import { slideInVariants } from '../assets/variants';
-import Input from './common/Input';
+import Input from '../components/common/Input';
+import Spinner from '../components/common/Spinner';
+import Button from '../components/common/Button';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

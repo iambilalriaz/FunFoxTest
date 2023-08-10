@@ -1,6 +1,6 @@
 import { KeyboardEvent, useEffect, useState } from 'react';
 import { userGroups } from '../assets/groups';
-import Button from './common/Button';
+import Button from '../components/common/Button';
 import { validate } from 'email-validator';
 import { toast } from 'react-toastify';
 import { userSignUp } from '../api/requests';
@@ -10,7 +10,7 @@ import { getAppUser } from '../utils';
 
 import { motion } from 'framer-motion';
 import { slideInVariants } from '../assets/variants';
-import Input from './common/Input';
+import Input from '../components/common/Input';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');

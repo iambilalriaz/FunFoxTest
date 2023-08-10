@@ -1,15 +1,5 @@
-import { KeyboardEvent } from 'react';
+import { InputProps } from '../types';
 
-interface InputProps {
-  label: string;
-  id: string;
-  type?: 'text' | 'password' | 'email';
-  value: string;
-  setValue: (value: string) => void;
-  onPressEnter: (e: KeyboardEvent) => void;
-  containerStyles?: string;
-  required?: boolean;
-}
 const Input = ({
   label,
   id,

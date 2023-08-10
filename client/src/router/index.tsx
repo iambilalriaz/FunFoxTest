@@ -1,14 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Login from '../components/Login';
-import SignUp from '../components/SignUp';
-import TasksList from '../components/TasksList';
+import Login from '../pages/Login';
+import SignUp from '../pages/SignUp';
+import Dashboard from '../pages/Dashboard';
 import ProtectedRoute from './ProtectedRoute';
 import { getAppUser } from '../utils';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: getAppUser() ? <TasksList /> : <Login />,
+    element: getAppUser() ? <Dashboard /> : <Login />,
   },
   {
     path: '/login',
@@ -20,6 +20,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <ProtectedRoute component={<TasksList />} />,
+    element: <ProtectedRoute component={<Dashboard />} />,
   },
 ]);

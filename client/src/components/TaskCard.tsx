@@ -1,7 +1,7 @@
 import { Draggable } from 'react-beautiful-dnd';
 import { BsPatchCheckFill } from 'react-icons/bs';
-import { ITask } from './TasksList';
 import Button from './common/Button';
+import { ITask } from './types';
 
 const TaskCard = ({
   task,
