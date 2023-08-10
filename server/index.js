@@ -22,6 +22,9 @@ app.use('/tasks', taskRoutes);
 io.on('connection', () => {
   console.log('Socket connection established.');
 });
+io.off('connection', () => {
+  console.log('Socket connection closed.');
+});
 
 server.listen(process.env.HTTP_PORT, () => {
   console.log(`Server listening on ${process.env.HTTP_PORT}`);

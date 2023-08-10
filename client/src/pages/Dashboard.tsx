@@ -11,6 +11,7 @@ import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import UserInfo from '../components/UserInfo';
 import { toast } from 'react-toastify';
 import { ITask } from '../components/types';
+import { getAppUser, socket } from '../utils';
 
 const Dashboard = () => {
   const [tasksList, setTasksList] = useState<ITask[]>([]);
@@ -65,6 +66,25 @@ const Dashboard = () => {
         setLoading(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    socket.on('UPDATE_TASKS', ({ tasks, group }) => {
+      if (group === getAppUser()?.group) {
+        setTasksList(tasks);
+      }
+    });
+    socket.on('NOTIFICATION', ({ doer, activity, group }) => {
+      if (group === getAppUser()?.group) {
+        toast.success(
+          `${doer === getAppUser()?.email ? 'You' : doer} ${activity}`
+        );
+      }
+    });
+    return () => {
+      socket.off('UPDATE_TASKS');
+      socket.off('NOTIFICATION');
+    };
   }, []);
 
   return (
