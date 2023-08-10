@@ -3,7 +3,7 @@
 ### Instructions to run this project
 
 1. You must have installed `node` in your system (preferably version >= 16)
-2. First, let's run the server. Follow these steps:
+2. First, let's run the server. Open up a terminal window in the project root directory & follow these steps:
 
 ```bash
 cd server
@@ -13,7 +13,7 @@ node index.js
 
 Your server will be started on the port specified in the `.env` file.
 
-3. Then , we have to run frontend. Follow these steps:
+3. Then , we have to run frontend. Open up a new terminal window in the project root directory & follow these steps:
 
 ```bash
 cd client
