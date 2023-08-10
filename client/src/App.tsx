@@ -4,10 +4,10 @@ import { router } from './router';
 
 const App = () => {
   return (
-    <div>
+    <>
       <AppToast />
       <RouterProvider router={router} />
-    </div>
+    </>
   );
 };
 

@@ -23,7 +23,7 @@ io.on('connection', () => {
   console.log('Socket connection established.');
 });
 
-server.listen(4000, () => {
-  console.log('Server listening on 4000');
+server.listen(process.env.HTTP_PORT, () => {
+  console.log(`Server listening on ${process.env.HTTP_PORT}`);
   createDBConnection();
 });
