@@ -17,16 +17,14 @@ const Spinner = ({
     | '6xl';
   styles?: string;
   variant?: 'primary' | 'secondary';
-}) => {
-  return (
-    <div
-      className={`spinner mx-auto ${
-        variant === 'primary' ? 'text-primary' : 'text-secondary'
-      } text-${size} w-fit h-fit ${styles}`}
-    >
-      <ImSpinner8 />
-    </div>
-  );
-};
+}) => (
+  <div
+    className={`spinner mx-auto ${
+      variant === 'primary' ? 'text-primary' : 'text-secondary'
+    } text-${size} w-fit h-fit ${styles}`}
+  >
+    <ImSpinner8 />
+  </div>
+);
 
 export default Spinner;

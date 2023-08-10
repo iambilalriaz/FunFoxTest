@@ -3,6 +3,8 @@ import Button from './common/Button';
 import { ITask } from './TasksList';
 import { getAppUser } from '../utils';
 import { motion } from 'framer-motion';
+import Input from './common/Input';
+import { slideInVariants } from '../assets/variants';
 const TaskForm = ({
   addNewTask,
   toggleAddingNewTask,
@@ -28,14 +30,7 @@ const TaskForm = ({
   };
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        x: 1000,
-      }}
-      animate={{
-        opacity: 1,
-        x: 0,
-      }}
+      variants={slideInVariants}
       transition={{
         delay: 0.2,
         duration: 0.5,
@@ -43,24 +38,18 @@ const TaskForm = ({
       className='h-screen grid place-items-center'
     >
       <div className='shadow-2xl rounded-lg p-4 min-w-[50%] m-4 text-secondary'>
-        <label
-          htmlFor='title'
-          className='font-semibold after:content-["*"] after:text-danger after:ml-0.5'
-        >
-          Title
-        </label>
-        <input
-          required
-          type='text'
+        <Input
+          label='Title'
           id='title'
           value={title}
-          onChange={(e) => setTitle(e?.target?.value)}
-          className='outline-none border border-secondary rounded p-1 block w-full mb-4'
-          onKeyDown={onPressEnter}
+          setValue={setTitle}
+          onPressEnter={onPressEnter}
+          containerStyles='mb-4'
+          required
         />
         <label
           htmlFor='description'
-          className='font-semibold after:content-["*"] after:text-danger after:ml-0.5'
+          className='font-medium after:content-["*"] after:text-danger after:ml-0.5'
         >
           Description
         </label>
@@ -71,6 +60,7 @@ const TaskForm = ({
           onChange={(e) => setDescription(e?.target?.value)}
           className='outline-none border border-secondary rounded p-2 resize-none block h-[8rem] w-full'
         />
+
         <div className='flex justify-center items-center mt-4'>
           <Button
             label='Cancel'

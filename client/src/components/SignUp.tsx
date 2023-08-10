@@ -10,6 +10,7 @@ import { getAppUser } from '../utils';
 
 import { motion } from 'framer-motion';
 import { slideInVariants } from '../assets/variants';
+import Input from './common/Input';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -54,40 +55,26 @@ const SignUp = () => {
         <header className='text-2xl font-medium text-secondary underline'>
           Sign Up
         </header>
-        <div className='mt-4'>
-          <label
-            htmlFor='email'
-            className='font-medium after:content-["*"] after:text-danger after:ml-0.5'
-          >
-            Email
-          </label>
-          <input
-            className='outline-none border border-secondary rounded p-2 block w-full mt-1'
-            type='email'
-            id='email'
-            required
-            value={email}
-            onChange={(e) => setEmail(e?.target?.value)}
-            onKeyDown={onPressEnter}
-          />
-        </div>
-        <div className='mt-4'>
-          <label
-            htmlFor='password'
-            className='font-medium after:content-["*"] after:text-danger after:ml-0.5'
-          >
-            Password
-          </label>
-          <input
-            className='outline-none border border-secondary rounded p-2 block w-full mt-1'
-            type='password'
-            id='password'
-            required
-            value={password}
-            onChange={(e) => setPassword(e?.target?.value)}
-            onKeyDown={onPressEnter}
-          />
-        </div>
+        <Input
+          label='Email'
+          type='email'
+          id='email'
+          value={email}
+          setValue={setEmail}
+          onPressEnter={onPressEnter}
+          containerStyles='mt-4'
+          required
+        />
+        <Input
+          label='Password'
+          type='password'
+          id='password'
+          value={password}
+          setValue={setPassword}
+          onPressEnter={onPressEnter}
+          containerStyles='mt-4'
+          required
+        />
         <div className='mt-4'>
           <label
             htmlFor='user-group'

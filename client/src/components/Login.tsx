@@ -10,6 +10,7 @@ import Spinner from './common/Spinner';
 
 import { motion } from 'framer-motion';
 import { slideInVariants } from '../assets/variants';
+import Input from './common/Input';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,7 +48,7 @@ const Login = () => {
     }
   };
   return (
-    <motion.section className='h-screen bg-slate-300 grid place-items-center text-xs md:text-sm'>
+    <section className='h-screen bg-slate-300 grid place-items-center text-xs md:text-sm'>
       <motion.div
         variants={slideInVariants}
         initial='initial'
@@ -61,34 +62,24 @@ const Login = () => {
         <header className='text-2xl font-medium text-secondary underline'>
           Login
         </header>
-        <div className='mt-4'>
-          <label htmlFor='email' className='font-medium'>
-            Email
-          </label>
-          <input
-            className='outline-none border border-secondary rounded p-2 block w-full mt-1'
-            type='email'
-            id='email'
-            required
-            value={email}
-            onChange={(e) => setEmail(e?.target?.value)}
-            onKeyDown={onPressEnter}
-          />
-        </div>
-        <div className='mt-4'>
-          <label htmlFor='password' className='font-medium'>
-            Password
-          </label>
-          <input
-            className='outline-none border border-secondary rounded p-2 block w-full mt-1'
-            type='password'
-            id='password'
-            required
-            value={password}
-            onChange={(e) => setPassword(e?.target?.value)}
-            onKeyDown={onPressEnter}
-          />
-        </div>
+        <Input
+          label='Email'
+          type='email'
+          id='email'
+          value={email}
+          setValue={setEmail}
+          onPressEnter={onPressEnter}
+          containerStyles='mt-4'
+        />
+        <Input
+          label='Password'
+          type='password'
+          id='password'
+          value={password}
+          setValue={setPassword}
+          onPressEnter={onPressEnter}
+          containerStyles='mt-4'
+        />
         <p className='my-2 text-right'>
           New user?{' '}
           <Link to='/signup' className='underline text-primary font-medium'>
@@ -105,7 +96,7 @@ const Login = () => {
           />
         )}
       </motion.div>
-    </motion.section>
+    </section>
   );
 };
 
